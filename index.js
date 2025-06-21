@@ -10,7 +10,8 @@ const watchSpritesPlugin = (initialOptions = {}) => {
   const options = {
     srcDir: join(cwd(), initialOptions.srcDir ?? DEFAULT_SRC_DIR),
     destDir: join(cwd(), initialOptions.destDir ?? DEFAULT_DEST_DIR),
-    config: initialOptions.config ?? {}
+    config: initialOptions.config ?? {},
+    lazy: initialOptions.lazy ?? false
   }
 
   return {
@@ -20,11 +21,13 @@ const watchSpritesPlugin = (initialOptions = {}) => {
       const iconsPath = resolve(options.srcDir);
       server.watcher.add(iconsPath);
 
-      if (await hasSVGIcons(options.srcDir)) {
-        console.log(`[🎨] Icon modified: ${iconsPath}`);
-        generateSprites(options);
-      } else {
-        console.log(`[❌] No icons found in: ${iconsPath}`);
+      if (!options.lazy) {
+        if (await hasSVGIcons(options.srcDir)) {
+          console.log(`[🎨] Icons generated`);
+          generateSprites(options);
+        } else {
+          console.log(`[❌] No icons found in: ${iconsPath}`);
+        }
       }
 
       server.watcher.on("change", (filePath) => {

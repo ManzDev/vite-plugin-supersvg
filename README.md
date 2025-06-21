@@ -104,13 +104,14 @@ import supersvgPlugin from 'vite-plugin-supersvg';
 export default {
   plugins: [
     supersvgPlugin({
-      srcDir: 'src/svgicons/',
-      destDir: 'public/icons/',
-      config: {
+      srcDir: 'src/svgicons/',      // Icons folder
+      destDir: 'public/icons/',     // Destination sprites svg
+      config: {                     // svg-sprite config
         shape: {
           spacing: { padding: 2 },
         },
       },
+      lazy: true            // Only generate sprites when changes occur
     })
   ]
 };
