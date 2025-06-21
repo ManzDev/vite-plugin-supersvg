@@ -3,7 +3,13 @@
   "version": "0.0.6",
   "description": "A Vite plugin to create SVG sprites for easy use.",
   "main": "index.js",
+  "types": "index.d.ts",
   "type": "module",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "generateSprites.js"
+  ],
   "scripts": {},
   "keywords": [
     "svg",
@@ -16,6 +22,7 @@
   "license": "ISC",
   "packageManager": "pnpm@10.12.1",
   "dependencies": {
+    "@types/svg-sprite": "^0.0.39",
     "svg-sprite": "^2.0.4"
   }
 }
