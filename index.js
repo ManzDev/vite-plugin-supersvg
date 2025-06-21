@@ -1,7 +1,7 @@
 import { join, resolve } from "node:path";
 import { cwd } from "node:process";
 
-import { generateSprites } from "./generateSprites.js";
+import { generateSprites, hasSVGIcons } from "./generateSprites.js";
 
 const DEFAULT_SRC_DIR = "/src/icons/";
 const DEFAULT_DEST_DIR = "/public/assets/icons/";
@@ -15,10 +15,17 @@ const watchSpritesPlugin = (initialOptions = {}) => {
 
   return {
     name: "watch-sprites",
-    configureServer(server) {
+    async configureServer(server) {
       console.log("[🧪] Plugin watch-sprites enabled");
       const iconsPath = resolve(options.srcDir);
       server.watcher.add(iconsPath);
+
+      if (await hasSVGIcons(options.srcDir)) {
+        console.log(`[🎨] Icon modified: ${iconsPath}`);
+        generateSprites(options);
+      } else {
+        console.log(`[❌] No icons found in: ${iconsPath}`);
+      }
 
       server.watcher.on("change", (filePath) => {
         if (filePath.startsWith(iconsPath)) {

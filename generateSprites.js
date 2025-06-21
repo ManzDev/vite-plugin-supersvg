@@ -65,3 +65,21 @@ export const generateSprites = async (options) => {
 
   console.log("[✅] Sprites regenerated.");
 };
+
+export const hasSVGIcons = async (srcDir) => {
+  try {
+    const folders = await getIconFolders(srcDir);
+
+    const results = await Promise.all(
+      folders.map(async (folder) => {
+        const files = await readdir(path.join(srcDir, folder.name));
+        return files.some(f => f.endsWith('.svg'));
+      })
+    );
+
+    return results.includes(true);
+  } catch (err) {
+    console.error(`[❌] Error reading SVG icons in ${srcDir}:`, err);
+    return false;
+  }
+};
