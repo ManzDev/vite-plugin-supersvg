@@ -6,7 +6,7 @@ import { generateSprites } from "./generateSprites.js";
 const DEFAULT_SRC_DIR = "/src/icons/";
 const DEFAULT_DEST_DIR = "/public/assets/icons/";
 
-const watchSpritesPlugin = (initialOptions) => {
+const watchSpritesPlugin = (initialOptions = {}) => {
   const options = {
     srcDir: join(cwd(), initialOptions.srcDir ?? DEFAULT_SRC_DIR),
     destDir: join(cwd(), initialOptions.destDir ?? DEFAULT_DEST_DIR),

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A Vite plugin to create SVG sprites for easy use.",
   "main": "index.js",
+  "type": "module",
   "scripts": {},
   "keywords": [
     "svg",
