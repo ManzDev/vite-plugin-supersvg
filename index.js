@@ -16,8 +16,6 @@ const watchSpritesPlugin = (initialOptions = {}) => {
   return {
     name: "watch-sprites",
     configureServer(server) {
-      if (import.meta.env.PROD) return;
-
       console.log("[🧪] Plugin watch-sprites enabled");
       const iconsPath = resolve(options.srcDir);
       server.watcher.add(iconsPath);
