@@ -26,6 +26,18 @@ const getIconFolders = async (baseDir) => {
   }
 };
 
+const getOrphanIcons = async (baseDir) => {
+  try {
+    const entries = await readdir(baseDir, { withFileTypes: true });
+    return entries
+      .filter((entry) => entry.isFile() && entry.name.endsWith(".svg"))
+      .map((entry) => path.join(baseDir, entry.name));
+  } catch (err) {
+    console.error(`[❌] Error reading orphan icons in ${baseDir}:`, err);
+    return [];
+  }
+};
+
 const addSVGFilesToSpriter = async (spriter, folderPath) => {
   const files = await readdir(folderPath);
   const svgFiles = files.filter((f) => f.endsWith(".svg"));
@@ -52,6 +64,7 @@ const compileAndWriteSprite = async (spriter, spriteName, destDir) => {
 export const generateSprites = async (options) => {
   await mkdir(options.destDir, { recursive: true });
 
+  // SVG Folders
   const folders = await getIconFolders(options.srcDir);
 
   await Promise.all(folders.map(async (folder) => {
@@ -62,6 +75,20 @@ export const generateSprites = async (options) => {
     await addSVGFilesToSpriter(spriter, folderPath);
     await compileAndWriteSprite(spriter, folder.name, options.destDir);
   }));
+
+  // SVG Orphans (edge case)
+  const orphanIcons = await getOrphanIcons(options.srcDir);
+
+  if (orphanIcons.length > 0) {
+    const spriter = new SVGSpriter(getSpriteConfig("default", options.config));
+
+    await Promise.all(orphanIcons.map(async (filePath) => {
+      const content = await readFile(filePath, "utf8");
+      spriter.add(filePath, null, content);
+    }));
+
+    await compileAndWriteSprite(spriter, "default", options.destDir);
+  }
 
   console.log("[✅] Sprites regenerated.");
 };
