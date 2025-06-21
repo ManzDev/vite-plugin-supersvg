@@ -65,7 +65,16 @@ export const generateSprites = async (options) => {
   await mkdir(options.destDir, { recursive: true });
 
   // SVG Folders
-  const folders = await getIconFolders(options.srcDir);
+  let folders = await getIconFolders(options.srcDir);
+
+  // No se permite la carpeta "default" (es para "orphan icons")
+  folders = folders.filter((folder) => {
+    if (folder.name === "default") {
+      console.error(`[❌] Folder named 'default' is reserved and will be ignored.`);
+      return false;
+    }
+    return true;
+  });
 
   await Promise.all(folders.map(async (folder) => {
     const folderPath = path.join(options.srcDir, folder.name);
