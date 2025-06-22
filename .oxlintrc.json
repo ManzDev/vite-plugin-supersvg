@@ -10,6 +10,7 @@
     "yoda": "off",
     "no-null": "off",
     "filename-case": "off",
-    "no-magic-numbers": "off"
+    "no-magic-numbers": "off",
+    "sort-keys": "off"
   }
 }

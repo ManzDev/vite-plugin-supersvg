@@ -1,7 +1,6 @@
+import { generateSprites, hasSVGIcons } from "./generateSprites.js";
 import { join, resolve } from "node:path";
 import { cwd } from "node:process";
-
-import { generateSprites, hasSVGIcons } from "./generateSprites.js";
 
 const DEFAULT_SRC_DIR = "/src/icons/";
 const DEFAULT_DEST_DIR = "/public/assets/icons/";
