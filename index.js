@@ -6,7 +6,7 @@ import { generateSprites, hasSVGIcons } from "./generateSprites.js";
 const DEFAULT_SRC_DIR = "/src/icons/";
 const DEFAULT_DEST_DIR = "/public/assets/icons/";
 
-const watchSpritesPlugin = (initialOptions = {}) => {
+const supersvgPlugin = (initialOptions = {}) => {
   const options = {
     srcDir: join(cwd(), initialOptions.srcDir ?? DEFAULT_SRC_DIR),
     destDir: join(cwd(), initialOptions.destDir ?? DEFAULT_DEST_DIR),
@@ -15,9 +15,9 @@ const watchSpritesPlugin = (initialOptions = {}) => {
   }
 
   return {
-    name: "watch-sprites",
+    name: "supersvg-plugin",
     async configureServer(server) {
-      console.log("[🧪] Plugin watch-sprites enabled");
+      console.log("[🧪] Plugin supersvg enabled");
       const iconsPath = resolve(options.srcDir);
       server.watcher.add(iconsPath);
 
@@ -54,4 +54,4 @@ const watchSpritesPlugin = (initialOptions = {}) => {
   }
 }
 
-export default watchSpritesPlugin;
+export default supersvgPlugin;
