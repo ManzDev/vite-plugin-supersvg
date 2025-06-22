@@ -1,0 +1,15 @@
+{
+  "plugins": ["unicorn"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "error",
+    "style": "warn"
+  },
+  "rules": {
+    "yoda": "off",
+    "no-null": "off",
+    "filename-case": "off",
+    "no-magic-numbers": "off"
+  }
+}
