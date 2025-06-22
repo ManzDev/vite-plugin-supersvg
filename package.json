@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-supersvg",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A Vite plugin to create SVG sprites for easy use.",
   "main": "index.js",
   "types": "index.d.ts",
